@@ -25,8 +25,6 @@ changeX = blockSize
 changeY = 0
 appleX = random.randrange(0, (gameWidth - blockSize) / blockSize) * blockSize
 appleY = random.randrange(0, (gameHeight - blockSize) / blockSize) * blockSize
-font = pygame.font.Font('freesansbold.ttf', 32)
-
 
 while inGame:
     clickX = False
@@ -103,6 +101,7 @@ while inGame:
         pygame.draw.ellipse(game, (0, 0, 0), [snakeX.__int__()+blockSize/4 - blockSize/8, snakeY.__int__() + blockSize/4*3 - blockSize/8, blockSize/4, blockSize/4])
         pygame.draw.ellipse(game, (0, 0, 0), [snakeX.__int__()+blockSize/4*3 - blockSize/8, snakeY.__int__() + blockSize/4*3 - blockSize/8, blockSize/4, blockSize/4])
 
+    font = pygame.font.Font('freesansbold.ttf', 32)
     text = font.render("Points: " + eatenApples.__str__(), True, (200, 150, 150))
     textRect = text.get_rect()
     textRect.center = (100, 30)
