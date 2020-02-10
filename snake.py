@@ -2,7 +2,7 @@ import pygame
 import random
 
 pygame.init()
-gameWidth = 600
+gameWidth = 900
 gameHeight = 600
 snakeSpeed = 10
 blockSize = 30
@@ -12,27 +12,20 @@ pygame.display.set_caption('Snake')
 clock = pygame.time.Clock()
 
 while inGame:
-
     gameInProgress = True
     eatenApples = 0
-
     snakeBody = []
     snakeLength = 3
     snakeX = gameWidth / 2
     snakeY = gameHeight / 2
-
     changeX = blockSize
     changeY = 0
-    appleX = random.randrange(0, (gameWidth - blockSize) / blockSize) * blockSize
-    appleY = random.randrange(0, (gameHeight - blockSize) / blockSize) * blockSize
-
+    appleX = random.randrange((gameWidth - blockSize) / blockSize) * blockSize
+    appleY = random.randrange((gameHeight - blockSize) / blockSize) * blockSize
     while gameInProgress:
         clickX = False
         clickY = False
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                gameInProgress = False
-
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT and changeX.__abs__() != blockSize and not clickY:
                     changeX = -blockSize
@@ -50,6 +43,8 @@ while inGame:
                     changeX = 0
                     changeY = blockSize
                     clickY = True
+            if event.type == pygame.QUIT:
+                gameInProgress = False
 
         snakeX += changeX;
         snakeY += changeY;
@@ -61,8 +56,8 @@ while inGame:
             goodApplePosition = False
             while not goodApplePosition:
                 goodApplePosition = True
-                appleX = random.randrange(0, (gameWidth - blockSize) / blockSize) * blockSize
-                appleY = random.randrange(0, (gameHeight - blockSize) / blockSize) * blockSize
+                appleX = random.randrange((gameWidth - blockSize) / blockSize) * blockSize
+                appleY = random.randrange((gameHeight - blockSize) / blockSize) * blockSize
 
                 for x in snakeBody:
                     if x[0].__int__() == appleX.__int__() and x[1].__int__() == appleY.__int__():
@@ -110,7 +105,6 @@ while inGame:
 
         if not gameInProgress:
             click = False
-            font = pygame.font.Font('freesansbold.ttf', 32)
             text2 = font.render("You Lose! continue?(Y/N)", True, (200, 150, 150))
             textRect2 = text2.get_rect()
             textRect2.center = (gameWidth / 2, gameHeight / 2)
@@ -118,18 +112,16 @@ while inGame:
             pygame.display.update()
             while not click:
                 for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        inGame = False
-                        click = True
-
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_y:
                             inGame = True
                             click = True
-
                         elif event.key == pygame.K_n:
                             inGame = False
                             click = True
+                    if event.type == pygame.QUIT:
+                        inGame = False
+                        click = True
 
         pygame.display.update()
         clock.tick(snakeSpeed)
